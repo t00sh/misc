@@ -37,7 +37,7 @@ do
 	    SERVER=$OPTARG
 	    ;;
 	"b")
-	    SERVER_DIRS=$OPTARG
+	    SERVER_DIR=$OPTARG
 	    ;;
 	"d")
 	    DIRS=$OPTARG
@@ -83,10 +83,10 @@ if [[ $CRYPT -ne 0 ]]
 then
     tar cvzf "$BACKUP_TMP.tar.gz" $BACKUP_TMP
     ccrypt -e "$BACKUP_TMP.tar.gz"
-    rsync -avr --progress --delete \
+    rsync -avr --progress --recursive --delete \
 	"$BACKUP_TMP.tar.gz.cpt" $SERVER:$SERVER_DIR
 else
-      rsync -avr --progress --delete \
+      rsync -avr --progress --recursive --delete \
 	"$BACKUP_TMP" $SERVER:$SERVER_DIR
 fi
 
