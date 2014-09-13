@@ -66,7 +66,7 @@ then
     fi
 fi
 
-BACKUP_TMP="backup"
+BACKUP_TMP="backup_"`date "+%Y_%d_%m"`
 
 cd
 rm -rf $BACKUP_TMP
@@ -74,7 +74,7 @@ mkdir $BACKUP_TMP
 
 for dir in $DIRS
 do
-    rsync -avr --progress --relative --delete \
+    rsync -avr --progress --relative \
 	--exclude '*~' --exclude '_*' --exclude 'lost+found' \
 	$dir $BACKUP_TMP
 done
@@ -83,10 +83,10 @@ if [[ $CRYPT -ne 0 ]]
 then
     tar cvzf "$BACKUP_TMP.tar.gz" $BACKUP_TMP
     ccrypt -e "$BACKUP_TMP.tar.gz"
-    rsync -avr --progress --recursive --delete \
+    rsync -avr --progress --recursive \
 	"$BACKUP_TMP.tar.gz.cpt" $SERVER:$SERVER_DIR
 else
-      rsync -avr --progress --recursive --delete \
+      rsync -avr --progress --recursive \
 	"$BACKUP_TMP" $SERVER:$SERVER_DIR
 fi
 
