@@ -28,7 +28,7 @@ fi
 DATE_START=`echo $DATES | perl -ne 'print $1 if(m/notBefore=(.+? GMT)/)'`
 DATE_END=`echo $DATES | perl -ne 'print $1 if(m/notAfter=(.+? GMT)/)'`
 
-DAYS=$((`date -d "$DATE_END" +"%s"` - `date -d "$DATE_START" +"%s"`))
+DAYS=$((`date -d "$DATE_END" +"%s"` - `date -u +"%s"`))
 DAYS=$(($DAYS / (60*60*24)))
 
 echo "Start: $DATE_START"
