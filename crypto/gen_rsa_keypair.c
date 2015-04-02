@@ -1,7 +1,7 @@
 /*
    code from http://repo.zenk-security.com/Cryptographie%20.%20Algorithmes%20.%20Steganographie/Attaque%20par%20factorisation%20contre%20RSA.pdf
 
-   To compile : gcc -lssl -lcrypto gen_privkey.c -p gen_privkey
+   To compile : gcc -lssl -lcrypto gen_privkey.c -o gen_privkey
 */
 
 
@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
   keypair->iqmp = iqmp;
 
   PEM_write_RSAPrivateKey(stdout, keypair, NULL, NULL, 0, NULL, NULL);
+  PEM_write_RSAPublicKey(stdout, keypair);
   BN_CTX_end(ctx);
   BN_CTX_free(ctx);
   RSA_free(keypair);
