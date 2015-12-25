@@ -30,22 +30,20 @@ foreach my $path(@ARGV) {
         $trashed = "$trashed($i)";
     }
 
-    rename($path, $trashed);
+    print "[+] Moving $path to $trashed\n";
+    if(!rename($path, $trashed)) {
+        die "Impossible de déplacer : $!\n";
+    }
 }
 
 sub get_file_name {
     my $path = shift;
-    my $index;
 
-    if(($index = rindex($path, '/')) == -1) {
-        return $path;
-    }
-
-    if($path =~ m/(.+)[\/]+$/) {
+    if($path =~ m/([^\/]+?)\/*$/) {
         return $1;
     }
 
-    return substr($path, $index+1);
+    return $path;
 }
 
 
