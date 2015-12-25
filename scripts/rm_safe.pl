@@ -41,5 +41,26 @@ sub get_file_name {
         return $path;
     }
 
+    if($path =~ m/(.+)[\/]+$/) {
+        return $1;
+    }
+
     return substr($path, $index+1);
+}
+
+
+sub remove_dir {
+    my $dir = shift;
+
+
+}
+
+sub remove_trash {
+    foreach my $path(<$TRASH_DIR/*>) {
+        if(-d $path) {
+            remove_dir($path);
+        } elsif(-f $path) {
+            unlink($path);
+        }
+    }
 }
