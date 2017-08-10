@@ -1,20 +1,17 @@
 /*
-   code from http://repo.zenk-security.com/Cryptographie%20.%20Algorithmes%20.%20Steganographie/Attaque%20par%20factorisation%20contre%20RSA.pdf
-
-   To compile : gcc -lssl -lcrypto gen_privkey.c -o gen_privkey
+   To compile : gcc -lcrypto gen_rsa_privkey.c -o gen_rsa_privkey
 */
 
-
 #include <stdio.h>
-#include <openssl/bn.h>
-#include <openssl/rsa.h>
-#include <openssl/engine.h>
-#include <openssl/pem.h>
 
+#include <openssl/bn.h>
+#include <openssl/pem.h>
+#include <openssl/rsa.h>
 
 int main(int argc, char **argv) {
   RSA *keypair = RSA_new();
   BN_CTX *ctx = BN_CTX_new();
+
   BN_CTX_start(ctx);
 
   BIGNUM *n = BN_new();
@@ -56,17 +53,11 @@ int main(int argc, char **argv) {
 
   BN_mod_inverse(iqmp,q,p,ctx);
 
-  keypair->n = n;
-  keypair->d = d;
-  keypair->e = e;
-  keypair->p = p;
-  keypair->q = q;
-  keypair->dmq1 = dmq1;
-  keypair->dmp1 = dmp1;
-  keypair->iqmp = iqmp;
+  RSA_set0_key(keypair, n, e, d);
+  RSA_set0_factors(keypair, p, q);
+  RSA_set0_crt_params(keypair, dmp1, dmq1, iqmp);
 
   PEM_write_RSAPrivateKey(stdout, keypair, NULL, NULL, 0, NULL, NULL);
-  PEM_write_RSAPublicKey(stdout, keypair);
   BN_CTX_end(ctx);
   BN_CTX_free(ctx);
   RSA_free(keypair);
