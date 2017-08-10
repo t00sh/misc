@@ -11,7 +11,7 @@ fi
 
 sed -i '
 s/À/\&Agrave;/g;
-s/É/\&Ecute;/g;
+s/É/\&Eacute;/g;
 s/È/\&Egrave;/g;
 s/à/\&agrave;/g;
 s/â/\&acirc;/g;
