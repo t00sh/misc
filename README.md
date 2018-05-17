@@ -21,3 +21,9 @@ Miscellious programs
 | gen_password.c                          | Generate password list from a charset                    |
 | how_secure_is_my_passwd.py              | Calculate password entropy                               |
 | monitor_certs.pl                        | Monitor certificates expiration                          |
+
+# binary/
+
+| _Script_                                | _Description_                                            |
+|-----------------------------------------|----------------------------------------------------------|
+| gen_instructions.c                      | Genere instructions for different architectures          |
